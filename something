@@ -1,0 +1,21 @@
+/*
+ * phaseOne.cpp
+ * Darius-Stefan Iavorschi
+ * 11/13/2024
+ * CS 15 Zap
+ * 
+ * This file includes the implementation of the functions presented in 
+ * phaseOne.h
+ */ 
+
+for c files
+
+/* HuffmanCoder.h
+ * Darius-Stefan Iavorschi
+ * CS 15, Project Zap
+ * 11/19/2024
+ * The header file for HuffmanCoder class. The class can both incode a string
+ * text to binary code and decode one using a HuffmanTree data structure.
+ */
+
+for h files
