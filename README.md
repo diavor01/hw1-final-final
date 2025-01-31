@@ -55,9 +55,9 @@ filesofpix Assignment
 **Implementations:**
 -  readaline:
     -  The readaline function reads characters one by one from the input file and stores them in a buffer (the buffer is allocated dynamically so that its size can change). The loop stops if it encounters the endline character or the end of the file. Then *datapp gets updated and the size of the buffer is returned. If the size is 0 (meaning we no characters have been read, and thus we reached the end of the line), the buffer is freed and the function returns 0
--  restoration
+-  restoration:
     -   this is the main function for handling of both decrypting and outputing the uncorruted pgm images. In this file we use readaline to process a corrupted file line by line, storing numbers in matrix_nums and characters in atoms, leveraging pointer equality to identify duplicate sequences. Once duplicates are found, we restore the original PGM file by filtering lines with the correct sequence, converting the data, and outputting it in PGM format with the appropriate header and binary content. 
--  WriteToBinaryt
+-  WriteToBinary:
     -  the writeToBinary function reads the characters from the sequence of characters and converts them to bytes that can outputted. This method is called multiple times over a conversion as it adds it to the correct matrix of btyes
   
 **Tests:**
