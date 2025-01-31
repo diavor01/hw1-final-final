@@ -40,7 +40,12 @@ void restoration(FILE *input)
         total_corrupted_lines++;
         if (ok == 0)
         {
-            int index = diff_nums_chars1(line, matrix, atom_sequence);
+            int index = diff_nums_chars1(
+                line, 
+                matrix, 
+                atom_sequence
+            );
+            
             if (index != -1)
             {
                 correct_atom = (char*) Seq_get(atom_sequence, index);
@@ -50,14 +55,26 @@ void restoration(FILE *input)
 
                 width = Seq_length(Seq_get(matrix, index));
 
-                matrix = correct_matrix(matrix, size_original_matrix, index, width);
-                assert(Seq_length(Seq_get(matrix, 0)) == Seq_length(Seq_get(matrix, 1)));
+                matrix = correct_matrix(
+                    matrix, 
+                    size_original_matrix, 
+                    index, 
+                    width
+                );
+                assert(Seq_length(Seq_get(matrix, 0)) 
+                == Seq_length(Seq_get(matrix, 1)));
+
                 ok = 1;
             }
         }
         else
         {
-            false_lines+= diff_nums_chars2(line, correct_atom, matrix, width);
+            false_lines+= diff_nums_chars2(
+                line, 
+                correct_atom, 
+                matrix, 
+                width
+            );
         }
 
         free(line);

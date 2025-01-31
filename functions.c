@@ -11,20 +11,21 @@
 
 /*
  * name:      diff_nums_chars1(const char *line, Seq_T matrix, 
-              Seq_T atom_sequence) (short for "differentiate between numbers and
-              other characters version 1")
+              Seq_T atom_sequence) (short for "differentiate between numbers 
+              and other characters version 1")
  * purpose:   using a helper function called separate, it differentiates
-              between numbers and injected characters. The numbers are stored 
-              inside a sequence called newRow, while the non-digit characters
-              are stored using atoms. Atoms were used because their 
-              implementation allows for easy comparrison between them, making 
-              them ideal to detect equalities between injected sequences.
- * arguments: the line of text, a sequence of sequences of pointers to integers
-              (converted to binary for the final p5 file), and a sequence of 
-              atoms
- * returns:   -1 if it did not find any 2 equal atoms in atom_sequence or the 
- *            index at which the an identical atoms was found (chechk the 
- *            implementation of check_atoms for more details)
+              between numbers and injected characters. The numbers are 
+              stored inside a sequence called newRow, while the non-digit 
+              characters are stored using atoms. Atoms were used 
+              because their implementation allows for easy comparrison 
+              between them, making them ideal to detect equalities 
+              between injected sequences.
+ * arguments: the line of text, a sequence of sequences of pointers 
+              to integers (converted to binary for the final p5 file), 
+              and a sequence of atoms
+ * returns:   -1 if it did not find any 2 equal atoms in atom_sequence 
+              or the index at which the an identical atoms was found 
+              (chechk the implementation of check_atoms for more details)
  * Author: Darius-Stefan Iavorschi
  */
 int diff_nums_chars1(const char *line, Seq_T matrix, Seq_T atom_sequence)
@@ -55,16 +56,21 @@ int diff_nums_chars1(const char *line, Seq_T matrix, Seq_T atom_sequence)
 
 
 /*
- * name:      diff_nums_chars2(const char* line, const char* correct_atom, Seq_T matrix, 
-                                                Seq_T atom_sequence, int width) (short for "differentiate between numbers and
-              other characters version 2")
+ * name:      diff_nums_chars2(const char* line, const char* correct_atom, 
+              Seq_T matrix, Seq_T atom_sequence, int width) (short for 
+              "differentiate between numbers and other characters version 2")
  * purpose:   using a helper function called separate, it differentiates
-              between numbers and injected characters. The difference between this function and diff_nums_chars1 is that 
- * arguments: the line of text, the verified injected sequence called correct_atom, the matrix containg the raw p5 data, and the known width of known original lines
+              between numbers and injected characters. The difference 
+              between this function and diff_nums_chars1 is that it takes as input 
+              the correct injected character sequence and the correc width
+ * arguments: the line of text, the verified injected sequence called correct_atom, 
+              the matrix containg the raw p5 data, and the known width of known 
+              original lines
  * returns:   fl (short for false lines, reffering to the non-orignal lines 
               inside the corrupted file). In the restoration function, the 
               program must check that the height of the matrix + the false 
-              lines equals the total number of corrupted lines before constructing the the raw pgm file
+              lines equals the total number of corrupted lines before 
+              constructing the the raw pgm file
  * Author: Darius-Stefan Iavorschi
  */
 int diff_nums_chars2(const char* line, const char* correct_atom, Seq_T matrix, 
@@ -84,7 +90,8 @@ int diff_nums_chars2(const char* line, const char* correct_atom, Seq_T matrix,
         exit(EXIT_FAILURE);
     }
 
-    /*First, we are just checking for atom equality. We are constructing the newRow only if that checks out*/
+    /*First, we are just checking for atom equality. 
+    We are constructing the newRow only if that checks out*/
     int size_atom = construct_injected_sequence(line, atom_val);
 
     const char *atom = Atom_new(atom_val, size_atom);
@@ -93,17 +100,11 @@ int diff_nums_chars2(const char* line, const char* correct_atom, Seq_T matrix,
     */ 
     if (atom == correct_atom)
     {
-        // printf("Printing Seq_length(newRow): %d\n", Seq_length(newRow));
-        // printf("The width is: %d\n", width);
-
         construct_newRow(line, newRow);
-
         /* Making sure the plain new row of data has the same width as
         * the other lines
         */  
         assert(Seq_length(newRow) == width);
-
-        //print_sequence(newRow);
         /* Adding the data to the matrix
         */  
         Seq_addhi(matrix, writeRowToBinary(newRow, width));
@@ -184,9 +185,7 @@ int separate(const char* line, Seq_T newRow, char* atom_val)
             }
 
             *number_ptr = atoi(num);
-            free(num); 
-
-            //printf("The number_ptr value is %d\n", *number_ptr);
+            free(num);
 
             /* Making sure the value is between 0 and 255*/
             assert(-1 < *number_ptr);
@@ -215,7 +214,8 @@ int separate(const char* line, Seq_T newRow, char* atom_val)
 
 /*
  * name:      construct_injected_sequence(const char* line, char* atom_val)
- * purpose:   a helper function for diff_nums_chars2. It has the same logic as separate without building a new row
+ * purpose:   a helper function for diff_nums_chars2. It has the same 
+ *            logic as separate without building a new row
  * arguments: the line of text,
  *            and char pointer atom_val that will be passed as an atom value
  *            back in diff_nums_chars2
@@ -253,8 +253,10 @@ int construct_injected_sequence(const char* line, char* atom_val)
 
 /*
  * name:      construct_newRow(const char* line, Seq_T newRow)
- * purpose:   a helper function for diff_nums_chars2. It has the same logic as separate, but it only constructs the newRow
- * arguments: the line of text, and the seqence we want to append the numbers to called newRow
+ * purpose:   a helper function for diff_nums_chars2. It has the same 
+ *            logic as separate, but it only constructs the newRow
+ * arguments: the line of text, and the seqence we want to append 
+ *            the numbers to called newRow
  * returns:   nothing
  * Author: Darius-Stefan Iavorschi
  */
@@ -319,9 +321,14 @@ void construct_newRow(const char* line, Seq_T newRow)
 
 /*
  * name:      check_atoms(Seq_T atom_sequence, const char* atom)
- * purpose:   checks for atom equality inside the atom_sequence. The function becomes obsolete after discovering the first 2 identical injected sequences of characters
+ * purpose:   checks for atom equality inside the atom_sequence. The 
+ *            function becomes obsolete after discovering the first 
+ *            2 identical injected sequences of characters
  * arguments: the atom_sequence and the constructed atom
- * returns:   the index at which the pair of identical atoms was found (the index of the other atom is already known: Seq_length(atom_sequence) - 1). If it could not be found, returns -1
+ * returns:   the index at which the pair of identical atoms was found 
+ *            (the index of the other atom is already known: 
+ *            Seq_length(atom_sequence) - 1). If it could not be found, 
+ *            returns -1
  * Author: Darius-Stefan Iavorschi
  */
 int check_atoms(Seq_T atom_sequence, const char* atom)
@@ -343,19 +350,21 @@ int check_atoms(Seq_T atom_sequence, const char* atom)
  * name:      correct_matrix(Seq_T matrix, int size_matrix, int index)
  * purpose:   Constructs a new matrix of pointers to bytes
  * arguments: the atom_sequence and the constructed atom
- * returns:   the index at which the pair of identical atoms was found (the index of the other atom is already known: Seq_length(atom_sequence) - 1). If it could not be found, returns -1
+ * returns:   the index at which the pair of identical atoms was 
+ *            found (the index of the other atom is already known: 
+ *            Seq_length(atom_sequence) - 1). 
+ *            If it could not be found, returns -1
  * Author: Darius-Stefan Iavorschi
  */
 Seq_T correct_matrix(Seq_T matrix, int size_matrix, int index, int width)
 {
-    // 1. Build the new matrix with the two “correct” rows
-    Seq_T new_matrix = Seq_seq(writeRowToBinary(Seq_get(matrix, index), width), 
-                        writeRowToBinary(Seq_get(matrix, size_matrix - 1), width),
-                        NULL);
+    Seq_T new_matrix = Seq_seq(
+        writeRowToBinary(
+            Seq_get(matrix, index), width), 
+            writeRowToBinary(Seq_get(matrix, size_matrix - 1), width),
+            NULL
+        );
 
-    // 2. Free all other rows
-    //    (Don’t free the rows at index and size_matrix-1 
-    //     because they're in new_matrix)
     for (int i = 0; i < size_matrix; i++) {
         if (i != index && i != size_matrix - 1) {
             Seq_T row = Seq_get(matrix, i);
@@ -368,19 +377,20 @@ Seq_T correct_matrix(Seq_T matrix, int size_matrix, int index, int width)
         }
     }
 
-    // 3. Now free the old matrix
     Seq_free(&matrix);
 
-    // 4. Return the new one
     return new_matrix;
 }
 
 /*
- * name:  
- * purpose:   
- * arguments: 
- * returns:   
- * Author: 
+ * name:      printing_matrix(Seq_T matrix, int width, int height)
+ * purpose:   prints out the P5 header with the dimensions and max 
+ *            grayscale value 
+ *            followed by the contents of the matrix in binary to stdout
+ * arguments: a matrix of sequences along with the width and height 
+ *            of the matrix
+ * returns:   void
+ * Author:  Alijah Jackson
  */
 void printing_matrix(Seq_T matrix, int width, int height)
 {
@@ -441,14 +451,15 @@ Seq_T writeRowToBinary(Seq_T seq, int width)
 
 /*
  * name:      print_sequence(Seq_T sequence)
- * purpose:   iteratres and prints out the numerical value of the (for debugging purpuses)
- * arguments: a sequence of int pointers Seq_T
+ * purpose:   iteratres and prints out the numerical value of the 
+ *            (for debugging purpuses)
+ * arguments: a sequence of int pointers
  * returns:   void 
  * Author: Alijah Jakcosn
  */
 void print_sequence(Seq_T sequence) {
     for (int i = 0; i < Seq_length(sequence); i++) {
-        int* value = Seq_get(sequence, i);  // Correctly cast the value
+        int* value = Seq_get(sequence, i);
         printf("%d ", *value);
     }
     printf("\n");
