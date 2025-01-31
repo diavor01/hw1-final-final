@@ -67,28 +67,3 @@ size_t readaline(FILE *inputfd, char **datapp) {
     return length;
 }
 
-        // if (length >= capacity) {
-        //     size_t new_capacity = capacity * 2;
-        //     unsigned char *temp = realloc(buffer, new_capacity);
-        //     if (!temp) {
-        //         free(buffer);
-        //         fprintf(stderr, "readaline: memory (re)allocation failed\n");
-        //         exit(EXIT_FAILURE);
-        //     }
-        //     buffer = temp;
-        //     capacity = new_capacity;
-        // }
-
-// char* increase_cap (char* buffer, size_t capacity)
-// {
-//     char* new_buff = realloc(buffer, capacity);
-
-//     if (new_buff == NULL) {
-//         fprintf(stderr, "Memory reallocation failed\n");
-//         free(buffer);
-//         exit(1);
-//     }
-
-//     return new_buff;
-// }
-
