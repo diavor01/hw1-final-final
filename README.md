@@ -1,7 +1,6 @@
 # CS-40-HW1
 Darius-Stefan Iavorschi (diavor01)
 Alijah Jackson (ajacks11)
-->
 
 filesofpix Assignment
 
