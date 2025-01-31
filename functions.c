@@ -42,13 +42,9 @@ int diff_nums_chars1(const char *line, Seq_T matrix, Seq_T atom_sequence)
 
     int size_atom = separate(line, newRow, atom_val);
 
-    // printf("The value of atom_val is: %s\n", atom_val);
-
     Seq_addhi(matrix, newRow);
 
     const char *atom = Atom_new(atom_val, size_atom);
-
-    // printf("The value of atom is: %s\n", atom);
 
     Seq_addhi(atom_sequence, (void *)atom);
 
@@ -308,8 +304,6 @@ void construct_newRow(const char* line, Seq_T newRow)
             *number_ptr = atoi(num);
             free(num); 
 
-            //printf("The number_ptr value is %d\n", *number_ptr);
-
             assert(-1 < *number_ptr);
             assert(*number_ptr < 256);
 
@@ -335,22 +329,12 @@ int check_atoms(Seq_T atom_sequence, const char* atom)
     
     for (int i = 0; i < Seq_length(atom_sequence) - 1; i++) {
         const char *current_atom = Seq_get(atom_sequence, i);
-        // printf("\n");
-        // printf("i: %d\n", i);
-        // printf("%p\n", current_atom);
-        // printf("%p\n", atom);
         if (current_atom == atom)
         {
-            // printf("Found the indices\n");
-
-            // printf("First index %d\n", i);
-
-            // printf("Second index %d\n", Seq_length(atom_sequence));
             return i;
         }
             
     }
-    // printf("returning %d", -1);
     return -1;
 }
 
@@ -369,8 +353,6 @@ Seq_T correct_matrix(Seq_T matrix, int size_matrix, int index, int width)
                         writeRowToBinary(Seq_get(matrix, size_matrix - 1), width),
                         NULL);
 
-    // print_sequence(Seq_get(matrix, index));
-    // print_sequence(Seq_get(matrix, size_matrix - 1));
     // 2. Free all other rows
     //    (Don’t free the rows at index and size_matrix-1 
     //     because they're in new_matrix)
@@ -393,7 +375,13 @@ Seq_T correct_matrix(Seq_T matrix, int size_matrix, int index, int width)
     return new_matrix;
 }
 
-//Creating the P5 value
+/*
+ * name:  
+ * purpose:   
+ * arguments: 
+ * returns:   
+ * Author: 
+ */
 void printing_matrix(Seq_T matrix, int width, int height)
 {
     // Print the P5 header
@@ -414,21 +402,6 @@ void printing_matrix(Seq_T matrix, int width, int height)
         }
     }
 }
-
-// for (int row = 0; row < height; row++) {
-//         Seq_T byte_seq = (Seq_T)Seq_get(matrix, row);
-
-//         for (int col = 0; col < width; col++) {
-//             // Each element in byte_seq is an unsigned char*, so retrieve it:
-//             unsigned char *byte_ptr = Seq_get(byte_seq, col);
-//             if (byte_ptr) {
-//                 putchar(*byte_ptr);
-//             } else {
-
-//                 fprintf(stderr, "Could not read byte_ptr");
-//             }
-//         }
-//     }
 
 /*
  * name:      writeRowToBinary(Seq_T seq, int width)
@@ -466,23 +439,10 @@ Seq_T writeRowToBinary(Seq_T seq, int width)
     return byte_seq;
 }
 
-
-// int value = (int)(intptr_t)Seq_get(seq, i);
-
-//         unsigned char byte_value = (unsigned char)value;
-
-//         /* Allocate storage for one byte and store it */
-//         unsigned char *stored_val = malloc(sizeof(*stored_val));
-//         *stored_val = byte_value;
-
-//         /* Add pointer to that single byte to the sequence */
-//         Seq_addhi(byte_seq, stored_val);
-
-
 /*
  * name:      print_sequence(Seq_T sequence)
- * purpose:   iteratres and prints out the numerical value of a 
- * arguments: a Sequence of numbers
+ * purpose:   iteratres and prints out the numerical value of the (for debugging purpuses)
+ * arguments: a sequence of int pointers Seq_T
  * returns:   void 
  * Author: Alijah Jakcosn
  */
@@ -493,110 +453,5 @@ void print_sequence(Seq_T sequence) {
     }
     printf("\n");
 }
-
-
-// void printing_atom_seq(Seq_T atom_sequence)
-// {
-//     printf("Printing the atom_sequence: \n");
-//     for (size_t j = 0; j < (size_t)Seq_length(atom_sequence); j++) 
-//     {
-//         char *str = Seq_get(atom_sequence, j);
-//         if (str) {
-//             printf("%s", str);
-//         } else {
-//             printf("NULL ");
-//         }
-//     }
-//     printf("\n");
-// }
-// void writeP5Header(const char *filename, int width, int height) {
-//     assert(width > 0);
-//     assert(height > 0);
-//     assert(filename != NULL);
-
-//     FILE *file = fopen(filename, "rb+");
-//     if (!file) {
-//         perror("Failed to open file");
-//         exit(EXIT_FAILURE);
-//     }
-
-//     // Move the existing contents to make room for the header
-//     fseek(file, 0, SEEK_END);
-//     long fileSize = ftell(file);
-//     char *buffer = (char *)malloc(fileSize);
-//     if (buffer == NULL) {
-//         perror("Memory allocation error");
-//         fclose(file);
-//         exit(EXIT_FAILURE);
-//     }
-
-//     fseek(file, 0, SEEK_SET);
-//     fread(buffer, 1, fileSize, file);
-
-//     fseek(file, 0, SEEK_SET);
-
-//     fprintf(file, "P5\n%d %d\n255\n", width, height);
-//     fwrite(buffer, 1, fileSize, file);
-
-//     free(buffer);
-//     fclose(file);
-// }
-// Function to trim leading and trailing whitespace from a string
-// void trim_whitespace(char *str) {
-//     char *end;
-
-//     // Trim leading space
-//     while (isspace((unsigned char)*str)) str++;
-
-//     if (*str == 0) { // All spaces?
-//         return;
-//     }
-
-//     // Trim trailing space
-//     end = str + strlen(str) - 1;
-//     while (end > str && isspace((unsigned char)*end)) end--;
-
-//     // Write new null terminator
-//     end[1] = '\0';
-// }
-
-// Function to convert a line into a sequence of numbers
-// Seq_T convert_line_to_sequence(const char *line) {
-//     if (line == NULL) {
-//         return NULL;
-//     }
-
-//     Seq_T sequence = Seq_new(0);
-//     if (sequence == NULL) {
-//         return NULL;
-//     }
-
-//     // Calculate length and allocate memory for copy
-//     size_t len = strlen(line) + 1;
-//     char *copy = malloc(len);
-//     if (copy == NULL) {
-//         Seq_free(&sequence);
-//         return NULL;
-//     }
-
-//     // Copy the input line to avoid modifying the original string
-//     strcpy(copy, line);
-
-//     // Use sscanf to read numbers directly from the string
-//     char *ptr = copy;
-//     int number;
-//     while (sscanf(ptr, "%d", &number) == 1) {
-//         Seq_addhi(sequence, (void *)(intptr_t)number);
-
-//         // Move ptr to the next non-whitespace character after the last number
-//         while (*ptr && !isspace((unsigned char)*ptr)) ptr++;
-//         while (*ptr && isspace((unsigned char)*ptr)) ptr++;
-//     }
-
-//     // Free the copied string memory
-//     free(copy);
-
-//     return sequence;
-// }
 
 
