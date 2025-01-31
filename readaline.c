@@ -7,6 +7,14 @@
 
 #define INITIAL_CAPACITY 1001
 
+
+/*
+ * name:      readaline(FILE *inputfd, char **datapp)
+ * purpose:   Itterates through a file line by line and takes the call by reference variable dataapp and changes its value to that line or null
+ * arguments: It takes the open file and a double pointer to the string line
+ * returns:   It returns the length of the line or 0 if it reached the end of the file
+ * Author: Darius-Stefan Iavorschi && Alijah Jackson
+ */
 size_t readaline(FILE *inputfd, char **datapp) {
     if (inputfd == NULL || datapp == NULL) {
         fprintf(stderr, "readaline: invalid argument\n");

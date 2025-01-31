@@ -355,10 +355,9 @@ int check_atoms(Seq_T atom_sequence, const char* atom)
 }
 
 
-// Not finished yet
 /*
  * name:      correct_matrix(Seq_T matrix, int size_matrix, int index)
- * purpose:   Constructs a new matrix with 
+ * purpose:   Constructs a new matrix of pointers to bytes
  * arguments: the atom_sequence and the constructed atom
  * returns:   the index at which the pair of identical atoms was found (the index of the other atom is already known: Seq_length(atom_sequence) - 1). If it could not be found, returns -1
  * Author: Darius-Stefan Iavorschi
@@ -431,7 +430,13 @@ void printing_matrix(Seq_T matrix, int width, int height)
 //         }
 //     }
 
-// Function to write a row of pixels to binary file
+/*
+ * name:      writeRowToBinary(Seq_T seq, int width)
+ * purpose:   constructs a new sequence of pointers to bytes 
+ * arguments: takes in a sequence and width of the desired new sequence
+ * returns:   a new constructed sequence of byte poitners
+ * Author: Alijah Jackson
+ */
 Seq_T writeRowToBinary(Seq_T seq, int width)
 {
     if (seq == NULL) {
@@ -473,6 +478,14 @@ Seq_T writeRowToBinary(Seq_T seq, int width)
 //         /* Add pointer to that single byte to the sequence */
 //         Seq_addhi(byte_seq, stored_val);
 
+
+/*
+ * name:      print_sequence(Seq_T sequence)
+ * purpose:   iteratres and prints out the numerical value of a 
+ * arguments: a Sequence of numbers
+ * returns:   void 
+ * Author: Alijah Jakcosn
+ */
 void print_sequence(Seq_T sequence) {
     for (int i = 0; i < Seq_length(sequence); i++) {
         int* value = Seq_get(sequence, i);  // Correctly cast the value
